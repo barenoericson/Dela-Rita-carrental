@@ -25,7 +25,7 @@ public class db_connector implements AutoCloseable {
         return conn;
     }
 
-    // Retrieve data from the database
+    // Retrieve data without parameters
     public ResultSet getData(String sql) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement(sql);
         return stmt.executeQuery();
@@ -40,7 +40,7 @@ public class db_connector implements AutoCloseable {
         return stmt.executeQuery();
     }
 
-    // Insert data into the database
+    // Insert data
     public int insertData(String sql, Object... values) {
         int result = 0;
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -50,6 +50,7 @@ public class db_connector implements AutoCloseable {
             result = pst.executeUpdate();
             System.out.println("Inserted Successfully!");
         } catch (SQLException e) {
+            System.out.println("Insert Error: " + e.getMessage());
             e.printStackTrace();
         }
         return result;
@@ -70,12 +71,13 @@ public class db_connector implements AutoCloseable {
         String sql = "SELECT 1 FROM " + tableName + " WHERE " + fieldName + " = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, value);
-            ResultSet result = pstmt.executeQuery();
-            return result.next();
+            try (ResultSet result = pstmt.executeQuery()) {
+                return result.next();
+            }
         }
     }
 
-    // Check for duplicates excluding the current record
+    // Check for duplicates excluding current ID
     public boolean duplicateCheckExcludingCurrent(String tableName, String columnName, String value, String idColumn, String idValue) {
         String sql = "SELECT 1 FROM " + tableName + " WHERE " + columnName + " = ? AND " + idColumn + " <> ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -100,21 +102,21 @@ public class db_connector implements AutoCloseable {
 
             if (rs.next()) {
                 String storedHashedPassword = rs.getString("password");
+                // Make sure passwordHasher.checkPassword is implemented elsewhere
                 if (passwordHasher.checkPassword(password, storedHashedPassword)) {
                     return rs.getString("usertype");
                 }
             }
         }
-        return null;  // Return null if login fails
+        return null;  // Login failed
     }
 
-    // Properly close the connection using AutoCloseable interface
+    // Close connection
     @Override
     public void close() {
         closeConnection();
     }
 
-    // ✅ New closeConnection() method implementation
     public void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {
@@ -126,4 +128,12 @@ public class db_connector implements AutoCloseable {
             ex.printStackTrace();
         }
     }
+
+    // Retrieve data with a single String parameter
+public ResultSet getData(String sql, String param) throws SQLException {
+    PreparedStatement stmt = conn.prepareStatement(sql);
+    stmt.setString(1, param);
+    return stmt.executeQuery();
+}
+
 }
