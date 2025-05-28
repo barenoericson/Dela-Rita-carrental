@@ -74,7 +74,7 @@ public class UserDashboard extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 130, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 130, -1));
 
         id.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         id.setForeground(new java.awt.Color(255, 255, 255));

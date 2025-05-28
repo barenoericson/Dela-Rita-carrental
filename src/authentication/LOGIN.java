@@ -161,6 +161,11 @@ public static boolean loginAcc(String username, String password) throws NoSuchAl
 
         jLabel10.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel10.setText("Forgot Password?");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, -1, -1));
 
         jCheckBox1.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
@@ -226,6 +231,10 @@ public static boolean loginAcc(String username, String password) throws NoSuchAl
        r.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+     new fogortpassword().setVisible(true); this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
      * @param args the command line arguments

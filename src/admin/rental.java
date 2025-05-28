@@ -59,6 +59,8 @@ public class rental extends javax.swing.JFrame {
         username = new javax.swing.JLabel();
         userid = new javax.swing.JLabel();
         Print = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rentalTable = new javax.swing.JTable();
 
@@ -111,8 +113,8 @@ public class rental extends javax.swing.JFrame {
         jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         userid.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        userid.setText("ID:");
-        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        userid.setText("ID");
+        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
 
         Print.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Print.setText("Print");
@@ -121,7 +123,21 @@ public class rental extends javax.swing.JFrame {
                 PrintActionPerformed(evt);
             }
         });
-        jPanel2.add(Print, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 110, 30));
+        jPanel2.add(Print, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 110, 30));
+
+        jButton5.setBackground(new java.awt.Color(204, 204, 204));
+        jButton5.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        jButton5.setText("Back");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 110, 30));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Current ID:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 170, 450));
 
@@ -238,6 +254,12 @@ if (rowIndex < 0) {
 
     }//GEN-LAST:event_PrintActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        AdminDashboard s = new AdminDashboard();
+        s.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,7 +302,9 @@ if (rowIndex < 0) {
     private javax.swing.JButton Print;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

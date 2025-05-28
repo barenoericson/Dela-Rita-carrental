@@ -32,7 +32,7 @@ public class USERS extends javax.swing.JFrame {
     ResultSet rs = null;
 
     try {
-        rs = dbc.getData("SELECT * FROM user_table");  
+        rs = dbc.getData("SELECT * FROM users");  
         usersTable.setModel(DbUtils.resultSetToTableModel(rs));  
     } catch (SQLException ex) {
         System.out.println("Errors: " + ex.getMessage());
@@ -58,6 +58,8 @@ public class USERS extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         username = new javax.swing.JLabel();
         userid = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
 
@@ -111,7 +113,21 @@ public class USERS extends javax.swing.JFrame {
 
         userid.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         userid.setText("ID:");
-        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, -1, -1));
+
+        jButton5.setBackground(new java.awt.Color(204, 204, 204));
+        jButton5.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        jButton5.setText("Back");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 110, 30));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Current ID:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 170, 450));
 
@@ -130,6 +146,7 @@ public class USERS extends javax.swing.JFrame {
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 620, 430));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -145,10 +162,10 @@ public class USERS extends javax.swing.JFrame {
         
         String userId = tbl.getValueAt(rowIndex, 0).toString();
         
-        ResultSet rs = cdb.getData("SELECT * FROM user_table WHERE id = '" + userId + "'");
+        ResultSet rs = cdb.getData("SELECT * FROM users WHERE u_id = '" + userId + "'");
         
         if (rs.next()) {
-            a.uid.setText(rs.getString("id")); 
+            a.uid.setText(rs.getString("u_id")); 
             a.firstname.setText(rs.getString("firstname"));
             a.lastname.setText(rs.getString("lastname"));
             a.un.setText(rs.getString("username"));
@@ -188,6 +205,12 @@ public class USERS extends javax.swing.JFrame {
           username.setText(""+sess.getUsername());
     }//GEN-LAST:event_formWindowActivated
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        AdminDashboard s = new AdminDashboard();
+        s.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -226,7 +249,9 @@ public class USERS extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -182,7 +182,8 @@ public class Selectcar extends javax.swing.JFrame {
     TableModel model = carTable.getModel();
     addRental sf = new addRental();
     sf.cid.setText(""+model.getValueAt(rowIndex, 0));
-    sf.carname.setText(""+model.getValueAt(rowIndex, 1));
+    sf.carname.setText(""+model.getValueAt(rowIndex, 2));
+    sf.number.setText(""+model.getValueAt(rowIndex, 1));
     sf.setVisible(true);
     this.dispose();
     

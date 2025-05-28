@@ -181,6 +181,7 @@ public class addUser extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 390, 550));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
@@ -263,14 +264,14 @@ if (First_name.isEmpty()) {
             return;
         }
 
-        boolean usernameExists = cdb.duplicateCheckExcludingCurrent("user_table", "username", un.getText(), "id", String.valueOf(userId));
-        boolean emailExists = cdb.duplicateCheckExcludingCurrent("user_table", "email", email.getText(), "id", String.valueOf(userId));
+        boolean usernameExists = cdb.duplicateCheckExcludingCurrent("users", "username", un.getText(), "u_id", String.valueOf(userId));
+        boolean emailExists = cdb.duplicateCheckExcludingCurrent("users", "email", email.getText(), "u_id", String.valueOf(userId));
 
         if (usernameExists || emailExists) {
             JOptionPane.showMessageDialog(null, "Username or Email already exists for another user!", "Validation Error", JOptionPane.WARNING_MESSAGE);
         } else {
             int rowsUpdated = cdb.updateData(
-                "UPDATE user_table SET firstname = ?, lastname = ?, username = ?, email = ?, usertype = ?, password = ?, status = ? WHERE id = ?",
+                "UPDATE users SET firstname = ?, lastname = ?, username = ?, email = ?, usertype = ?, password = ?, status = ? WHERE u_id = ?",
                 firstname.getText(),
                 lastname.getText(),
                 un.getText(),

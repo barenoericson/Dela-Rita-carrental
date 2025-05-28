@@ -5,7 +5,9 @@
  */
 package admin;
 
+import authentication.LOGIN;
 import config.Session;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -77,7 +79,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         username.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("Admin");
-        jPanel4.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        jPanel4.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         id.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         id.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,7 +93,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 170, 40));
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 170, 30));
 
         jButton4.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jButton4.setText("Car");
@@ -100,9 +102,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 170, 40));
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 170, 30));
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jButton1.setText("User");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +112,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, 40));
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 170, 30));
 
         jButton5.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jButton5.setText("Rental");
@@ -119,7 +121,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 170, 40));
+        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 170, 30));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 430));
 
@@ -138,11 +140,19 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(null,
+            "Do you want to log out?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION
+        );
+        if(choice == JOptionPane.YES_NO_OPTION){
+            this.dispose();
+            new LOGIN().setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+      new car().setVisible(true); this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
