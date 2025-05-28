@@ -18,12 +18,12 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Administrator
  */
-public class rental extends javax.swing.JFrame {
+public class Selectcar extends javax.swing.JFrame {
 
     /**
      * Creates new form USERS
      */
-    public rental() {
+    public Selectcar() {
         initComponents();
          displayData();
     }
@@ -32,8 +32,8 @@ public class rental extends javax.swing.JFrame {
     ResultSet rs = null;
 
     try {
-        rs = dbc.getData("SELECT * FROM rental");  
-        rentalTable.setModel(DbUtils.resultSetToTableModel(rs));  
+        rs = dbc.getData("SELECT * FROM car");  
+        carTable.setModel(DbUtils.resultSetToTableModel(rs));  
     } catch (SQLException ex) {
         System.out.println("Errors: " + ex.getMessage());
     } finally {
@@ -58,9 +58,8 @@ public class rental extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         username = new javax.swing.JLabel();
         userid = new javax.swing.JLabel();
-        Print = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        rentalTable = new javax.swing.JTable();
+        carTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -75,7 +74,7 @@ public class rental extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Rental");
+        jLabel1.setText("Car");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 39));
@@ -88,7 +87,7 @@ public class rental extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setText("Edit");
+        jButton1.setText("Cancel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -98,7 +97,7 @@ public class rental extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton2.setText("Add");
+        jButton2.setText("Select");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -114,18 +113,9 @@ public class rental extends javax.swing.JFrame {
         userid.setText("ID:");
         jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
-        Print.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Print.setText("Print");
-        Print.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PrintActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Print, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 110, 30));
-
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 170, 450));
 
-        rentalTable.setModel(new javax.swing.table.DefaultTableModel(
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -133,7 +123,7 @@ public class rental extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(rentalTable);
+        jScrollPane1.setViewportView(carTable);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 400, 390));
 
@@ -144,52 +134,59 @@ public class rental extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- int rowIndex = rentalTable.getSelectedRow();
+    int rowIndex = carTable.getSelectedRow();
 
-if (rowIndex < 0) {
-    JOptionPane.showMessageDialog(null, "Please Select an Item!", "Selection Error", JOptionPane.WARNING_MESSAGE);
-} else {
-    addRental a = new addRental();
-    db_connector cdb = new db_connector();
-
-    try {
-        TableModel tbl = rentalTable.getModel();
-        String rentalId = tbl.getValueAt(rowIndex, 0).toString(); // Assuming column 0 is r_id
-
-        ResultSet rs = cdb.getDataWithParams("SELECT * FROM rental WHERE r_id = ?", rentalId);
-
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please Select An Item!");
+    } else {
+        addCar a = new addCar();
+        try {
+      db_connector cdb = new db_connector();
+        TableModel tbl = carTable.getModel();
+        
+        String userId = tbl.getValueAt(rowIndex, 0).toString();
+        
+        ResultSet rs = cdb.getData("SELECT * FROM car WHERE c_id = '" + userId + "'");
+        
         if (rs.next()) {
-            a.cid.setText(rs.getString("c_id"));
-            a.uid.setText(rs.getString("u_id"));
+            a.cid.setText(rs.getString("c_id")); 
             a.carname.setText(rs.getString("c_name"));
-            a.number.setText(rs.getString("c_number"));
-            a.cat.setSelectedItem(rs.getString("category"));
-            a.status.setSelectedItem(rs.getString("status"));
-            a.payment.setSelectedItem(rs.getString("payment"));
+            a.cat.setSelectedItem(rs.getString("category"));  
+            String userStatus = rs.getString("status");
+           
+            
+            a.status.setSelectedItem(userStatus != null ? userStatus : ""); 
 
-            a.add.setEnabled(false);   
-            a.update.setEnabled(true); 
-            a.rid.setText(rentalId);   
+            a.add.setEnabled(false);
+            a.update.setEnabled(true);
             a.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Rental record not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "User data not found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        
     } catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        cdb.closeConnection();
     }
 }
-
      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      addRental au = new addRental();
-      au.setVisible(true);
-      this.dispose();
+    int rowIndex = carTable.getSelectedRow();
+
+   if (rowIndex < 0) {
+       JOptionPane.showMessageDialog(null, "Please Select An Item!");
+   } else {
+   
+    TableModel model = carTable.getModel();
+    addRental sf = new addRental();
+    sf.cid.setText(""+model.getValueAt(rowIndex, 0));
+    sf.carname.setText(""+model.getValueAt(rowIndex, 1));
+    sf.setVisible(true);
+    this.dispose();
+    
+}     
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -197,46 +194,6 @@ if (rowIndex < 0) {
           userid.setText(""+sess.getId());
           username.setText(""+sess.getUsername());
     }//GEN-LAST:event_formWindowActivated
-
-    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
-      int rowIndex = rentalTable.getSelectedRow();
-
-if (rowIndex < 0) {
-    JOptionPane.showMessageDialog(null, "Please Select an Item!", "Selection Error", JOptionPane.WARNING_MESSAGE);
-} else {
-    receipt a = new receipt();
-    db_connector cdb = new db_connector();
-
-    try {
-        TableModel tbl = rentalTable.getModel();
-        String rentalId = tbl.getValueAt(rowIndex, 0).toString(); 
-
-        ResultSet rs = cdb.getDataWithParams("SELECT * FROM rental WHERE r_id = ?", rentalId);
-
-        if (rs.next()) {
-            a.rid.setText(rs.getString("r_id"));
-            a.uid.setText(rs.getString("u_id"));
-            a.cid.setText(rs.getString("c_id"));
-            a.carname.setText(rs.getString("c_name"));
-            a.number.setText(rs.getString("c_number"));
-            a.status.setText(rs.getString("status"));
-            a.payment.setText(rs.getString("payment"));
-            a.cat.setText(rs.getString("category"));
-
-            a.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Rental record not found!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        cdb.closeConnection();
-    }
-}
-
-    }//GEN-LAST:event_PrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,13 +212,13 @@ if (rowIndex < 0) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Selectcar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Selectcar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Selectcar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Selectcar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -271,13 +228,13 @@ if (rowIndex < 0) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new rental().setVisible(true);
+                new Selectcar().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Print;
+    private javax.swing.JTable carTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -285,7 +242,6 @@ if (rowIndex < 0) {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable rentalTable;
     private javax.swing.JLabel userid;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables

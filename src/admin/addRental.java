@@ -6,6 +6,7 @@
 package admin;
 
 import authentication.LOGIN;
+import config.Session;
 import config.db_connector;
 import config.passwordHasher;
 import static javax.management.remote.JMXConnectorFactory.connect;
@@ -60,6 +61,7 @@ public class addRental extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         payment = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -168,7 +170,7 @@ public class addRental extends javax.swing.JFrame {
         jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 330, 40));
 
         cid.setEnabled(false);
-        jPanel1.add(cid, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 30));
+        jPanel1.add(cid, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 310, 30));
 
         jLabel16.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel16.setText("Car ID:");
@@ -188,53 +190,59 @@ public class addRental extends javax.swing.JFrame {
         jLabel9.setText("Payment");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
 
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 20, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 390, 550));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
- // Get trimmed input values
-String Carname = carname.getText().trim();
-String Number = number.getText().trim();
-String Cat = cat.getSelectedItem() != null ? cat.getSelectedItem().toString().trim() : "";
-String Status = status.getSelectedItem() != null ? status.getSelectedItem().toString().trim() : "";
-String Payment = payment.getSelectedItem() != null ? payment.getSelectedItem().toString().trim() : "";
-String Userid = uid.getText().trim();
-String Carid = cid.getText().trim();
+ 
+    String Carname = carname.getText().trim();
+    String Number = number.getText().trim();
+    String Cat = cat.getSelectedItem() != null ? cat.getSelectedItem().toString().trim() : "";
+    String Status = status.getSelectedItem() != null ? status.getSelectedItem().toString().trim() : "";
+    String Payment = payment.getSelectedItem() != null ? payment.getSelectedItem().toString().trim() : "";
+    String Carid = cid.getText().trim();
+    Session sess = Session.getInstance();
 
-db_connector connect = new db_connector();
+   db_connector connect = new db_connector();
 
-// Validation
-if (Carname.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Please enter the Car Name!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else if (Number.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Please enter the Car Number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else if (Cat.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Please select a Category!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else if (Status.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Please select a Status!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else if (Payment.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Please select a Payment Method!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else if (Userid.isEmpty() || Carid.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "User ID and Car ID are required!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-} else {
-    try {
+
+    if (Carname.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter the Car Name!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+    } else if (Number.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter the Car Number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+    } else if (Cat.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please select a Category!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+    } else if (Status.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please select a Status!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+    } else if (Payment.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please select a Payment Method!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+        
+    } else {
+      
+        try {
         // Check if car number already exists in rental table
         if (connect.fieldExists("rental", "c_number", Number)) {
             JOptionPane.showMessageDialog(null, "Car number already exists!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
         } else {
             // Corrected SQL order and parameters
             String sql = "INSERT INTO rental (u_id, c_id, c_number, category, c_name, payment, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            int rowsInserted = connect.insertData(sql, Userid, Carid, Number, Cat, Carname, Payment, Status);
+            int rowsInserted = connect.insertData(sql, sess.getId(), Carid, Number, Cat, Carname, Payment, Status);
 
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(null, "Rental Registered Successfully!");
 
-                // Go to login window
-                new LOGIN().setVisible(true);
+                new rental().setVisible(true);this.dispose();
 
-                // Close current form
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(carname);
                 if (frame != null) {
                     frame.dispose();
@@ -330,6 +338,10 @@ if (Carname.isEmpty()) {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+       new Selectcar().setVisible(true); this.dispose();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -392,6 +404,7 @@ if (Carname.isEmpty()) {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButton1;
     public javax.swing.JTextField number;
     public javax.swing.JComboBox<String> payment;
     public javax.swing.JTextField rid;
