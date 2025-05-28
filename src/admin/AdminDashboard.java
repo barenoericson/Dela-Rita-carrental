@@ -43,6 +43,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,7 +80,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         username.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("Admin");
-        jPanel4.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
+        jPanel4.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
 
         id.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         id.setForeground(new java.awt.Color(255, 255, 255));
@@ -93,7 +94,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 170, 30));
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 170, 30));
 
         jButton4.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jButton4.setText("Car");
@@ -102,7 +103,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 170, 30));
+        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 170, 30));
 
         jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -112,7 +113,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 170, 30));
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 170, 30));
 
         jButton5.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jButton5.setText("Rental");
@@ -121,7 +122,16 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 170, 30));
+        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 170, 30));
+
+        jButton6.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jButton6.setText("Logs");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 170, 30));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 430));
 
@@ -165,6 +175,10 @@ public class AdminDashboard extends javax.swing.JFrame {
        username.setText(""+sess.getUsername());
     }//GEN-LAST:event_formWindowActivated
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        new logs().setVisible(true); this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,6 +220,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

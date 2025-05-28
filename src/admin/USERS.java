@@ -151,45 +151,46 @@ public class USERS extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     int rowIndex = usersTable.getSelectedRow();
+        if(rowIndex < 0){
+            JOptionPane.showMessageDialog(null,"Please Select an Item!");
+        }else{
+            try{
 
-    if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please Select An Item!");
-    } else {
-        addUser a = new addUser();
-        try {
-      db_connector cdb = new db_connector();
-        TableModel tbl = usersTable.getModel();
-        
-        String userId = tbl.getValueAt(rowIndex, 0).toString();
-        
-        ResultSet rs = cdb.getData("SELECT * FROM users WHERE u_id = '" + userId + "'");
-        
-        if (rs.next()) {
-            a.uid.setText(rs.getString("u_id")); 
-            a.firstname.setText(rs.getString("firstname"));
-            a.lastname.setText(rs.getString("lastname"));
-            a.un.setText(rs.getString("username"));
-            a.email.setText(rs.getString("email"));
-            a.password.setText(rs.getString("password"));
-            
-            String userStatus = rs.getString("status");
-            String userType = rs.getString("usertype");
-            
-            a.status.setSelectedItem(userStatus != null ? userStatus : ""); 
-            a.usertype1.setSelectedItem(userType != null ? userType : "");
+                db_connector dbc = new db_connector();
+                TableModel tbl = usersTable.getModel();
+                ResultSet rst = dbc.getData("SELECT * FROM users WHERE u_id = '"+tbl.getValueAt(rowIndex, 0)+"'");
+                if(rst.next()){
+                    addUser cuf = new addUser();
+                    cuf.uid.setText(""+rst.getInt("u_id"));
+                    cuf.un.setText(""+rst.getString("username"));
+                    cuf.firstname.setText(""+rst.getString("firstname"));
+                    cuf.lastname.setText(""+rst.getString("lastname"));
+                    cuf.password.setText(""+rst.getString("password"));
+                    cuf.usertype1.setSelectedItem(""+rst.getString("usertype"));
+                    cuf.status.setSelectedItem(""+rst.getString("status"));
+                    cuf.images.setIcon(cuf.ResizeImage(rst.getString("images"), null, cuf.images));
+                    cuf.oldpath = rst.getString("images");
+                    cuf.path = rst.getString("images");
+                    cuf.destination = rst.getString("images");
+                    cuf.add.setEnabled(false);
+                    cuf.update.setEnabled(true);
+                    cuf.password.setEnabled(false);
 
-            a.add.setEnabled(false);
-            a.update.setEnabled(true);
-            a.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "User data not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                    if(rst.getString("images").isEmpty()){
+                        cuf.select.setEnabled(true);
+                        cuf.remove.setEnabled(false);
+                    }else{
+                        cuf.select.setEnabled(false);
+                        cuf.remove.setEnabled(true);
+                    }
+                    cuf.setVisible(true);
+                    this.dispose();
+
+                }
+            }catch(SQLException ex){
+                System.out.println(""+ex);
+            }
         }
-        
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
      
     }//GEN-LAST:event_jButton1ActionPerformed
 
